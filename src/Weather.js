@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 import "./Weather.css";
 
 export default function Weather() {
-  let weatherData = {
+  const [city, setCity] = useState(" ");
+
+
+    function weatherData(response) = {
+        setWeather({
+
+        
     city: "Budapest",
     date: "Monday, 07:00",
     description: "snow and rain",
@@ -12,11 +18,11 @@ export default function Weather() {
     temperature: 3,
     felttemp: -1,
     humidity: 87,
-    wind: 5,
+    wind: 5,});
   };
   return (
     <div className="Weather">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-8">
             <input
@@ -29,7 +35,12 @@ export default function Weather() {
             />
           </div>
           <div className="col-2">
-            <input type="submit" className="button" value="Submit" />
+            <input
+              type="submit"
+              className="button"
+              value="Submit"
+              onSubmit={updateCity}
+            />
           </div>
           <div className="col-2">
             <input type="button" id="here" className="button" value="Here" />
@@ -73,4 +84,23 @@ export default function Weather() {
       </div>
     </div>
   );
+
+  function displayWeather(response) {
+    setWeather({
+      temperature: response.Data.main.temp,
+    });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    let apiKey = "4f230f436aaf7bc8331e67c3e0e44473";
+    let unit = "metric";
+    let apiUrl = `https://api.openweathermap.org/Data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
+    axios.get(apiUrl).then(weatherData);
+  }
+
+  function updateCity(event) {
+    event.preventDefault();
+    setCity(event.target.value);
+  }
 }

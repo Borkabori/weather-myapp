@@ -1,0 +1,130 @@
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+h1 {
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 28px;
+  padding-bottom: 5px;
+  padding-top: 20px;
+}
+
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+li {
+  list-style: none;
+  margin-left: 0px;
+  padding: 0px;
+  color: black;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
+.Weather {
+  padding: 20px;
+  margin: 10px 0px;
+  background-color: rgba(206, 154, 71, 0.3);
+  border: none;
+  border-radius: 18px;
+}
+
+.Weather:hover {
+  background-color: rgba(206, 154, 71, 0.5);
+  transition: all 0.2s ease-in-out;
+}
+
+.container {
+  max-width: 500px;
+  margin: 30px auto;
+}
+
+.timeandzone {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.weather-temperature img {
+  margin-right: 10px;
+  height: 72px;
+  width: 72px;
+}
+
+#currenttemperature {
+  color: rgb(0, 0, 0);
+  font-size: 64px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.form-control {
+  padding: 0px;
+}
+
+.form-control,
+.button {
+  background-color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 34px;
+  border: none;
+  border-radius: 18px;
+}
+
+#submitted {
+  position: relative;
+  left: -8px;
+}
+
+.button:hover {
+  cursor: pointer;
+  font-weight: 500;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.unit {
+  position: relative;
+  font-size: 25px;
+  font-weight: 400;
+  top: -30px;
+  text-decoration: none;
+}
+
+.tempanddetails {
+  position: relative;
+  top: 10px;
+}
+
+.weather-forecast {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.forecast-date {
+  font-size: 16px;
+  opacity: 1;
+  font-weight: 400;
+  text-align: center;
+}
+
+.forecasted-temperatures {
+  font-size: 13px;
+  text-align: center;
+}
+
+.forecasted-temp-min {
+  opacity: 0.7;
+}

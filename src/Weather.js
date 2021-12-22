@@ -5,21 +5,20 @@ import "./Weather.css";
 
 export default function Weather() {
   const [city, setCity] = useState(" ");
+  const [weather, setWeather] = useState({});
 
-
-    function weatherData(response) = {
-        setWeather({
-
-        
-    city: "Budapest",
-    date: "Monday, 07:00",
-    description: "snow and rain",
-    imgUrl: "https://ssl.gstatic.com/onebox/weather/48/snow_s_rain.png",
-    temperature: 3,
-    felttemp: -1,
-    humidity: 87,
-    wind: 5,});
-  };
+  function weatherData(response) {
+    setWeather({
+      city: "Budapest",
+      date: "Monday, 07:00",
+      description: "snow and rain",
+      imgUrl: "https://ssl.gstatic.com/onebox/weather/48/snow_s_rain.png",
+      temperature: 3,
+      felttemp: -1,
+      humidity: 87,
+      wind: 5,
+    });
+  }
   return (
     <div className="Weather">
       <form onSubmit={handleSubmit}>

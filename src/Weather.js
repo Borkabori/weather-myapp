@@ -6,8 +6,10 @@ import "./Weather.css";
 export default function Weather() {
   const [city, setCity] = useState(" ");
   const [weather, setWeather] = useState({});
+  const [loaded, setLoaded] = useState(false);
 
   function displayWeatherData(response) {
+    setLoaded(true);
     setWeather({
       date: response.data.dt,
       description: response.data.weather[0].description,
@@ -32,64 +34,72 @@ export default function Weather() {
     setCity(event.target.value);
   }
 
-  return (
-    <div className="Weather">
-      <form onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col-8">
-            <input
-              type="text"
-              name="city"
-              className="form-control"
-              placeholder="Search for a city ..."
-              autoComplete="off"
-              autofocus="on"
-              onSubmit={updateCity}
-            />
-          </div>
-          <div className="col-2">
-            <input type="submit" className="button" value="Submit" />
-          </div>
-          <div className="col-2">
-            <input type="button" className="button" value="Here" />
-          </div>
-        </div>
-      </form>
-
-      <h1 className="choosencity">{weather.city}</h1>
-      <ul>
-        <li>${city}</li>
-        <li className="timeandzone">
-          GMT <span>{weather.data.sys.type}</span>
-        </li>
-      </ul>
-      <br />
+  let form = (
+    <form onSubmit={handleSubmit}>
       <div className="row">
-        <div className="col-4 tempanddetails">
-          <ul>
-            <li>{weather.description}</li>
-            <li>
-              feels like: <span>{weather.felttemp}</span> °C
-            </li>
-            <li>
-              humidity: <span>{weather.humidity}</span> %
-            </li>
-            <li>
-              wind: <span>{weather.wind}</span> km/h
-            </li>
-          </ul>
+        <div className="col-8">
+          <input
+            type="text"
+            name="city"
+            className="form-control"
+            placeholder="Search for a city ..."
+            autoComplete="off"
+            autofocus="on"
+            onChange={updateCity}
+          />
         </div>
-        <div className="col-4">
-          <img src={weather.imgUrl} alt={weather.description} />
+        <div className="col-2">
+          <input type="submit" className="button" value="Submit" />
         </div>
-
-        <div className="col-4 tempanddetails">
-          <span>{weather.temperature}</span>
-          <span className="unit">
-            <a href="/">°C</a> | <a href="/">°F</a>
-          </span>
+        <div className="col-2">
+          <input type="button" className="button" value="Here" />
         </div>
       </div>
-    </div>
+    </form>
   );
+
+  if (loaded) {
+    return (
+      <div className="Weather">
+        {form}
+
+        <h1 className="choosencity">{weather.city}</h1>
+        <ul>
+          <li>${city}</li>
+          <li className="timeandzone">
+            GMT <span>{weather.data.sys.type}</span>
+          </li>
+        </ul>
+        <br />
+        <div className="row">
+          <div className="col-4 tempanddetails">
+            <ul>
+              <li>{weather.description}</li>
+              <li>
+                feels like: <span>{weather.felttemp}</span> °C
+              </li>
+              <li>
+                humidity: <span>{weather.humidity}</span> %
+              </li>
+              <li>
+                wind: <span>{weather.wind}</span> km/h
+              </li>
+            </ul>
+          </div>
+          <div className="col-4">
+            <img src={weather.imgUrl} alt={weather.description} />
+          </div>
+
+          <div className="col-4 tempanddetails">
+            <span>{weather.temperature}</span>
+            <span className="unit">
+              <a href="/">°C</a> | <a href="/">°F</a>
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return form;
+  }
 }

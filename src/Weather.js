@@ -7,18 +7,31 @@ export default function Weather() {
   const [city, setCity] = useState(" ");
   const [weather, setWeather] = useState({});
 
-  function weatherData(response) {
+  function displayWeatherData(response) {
     setWeather({
-      city: "Budapest",
-      date: "Monday, 07:00",
-      description: "snow and rain",
-      imgUrl: "https://ssl.gstatic.com/onebox/weather/48/snow_s_rain.png",
-      temperature: 3,
-      felttemp: -1,
-      humidity: 87,
-      wind: 5,
+      date: response.data.dt,
+      description: response.data.weather[0].description,
+      imgUrl: `https://ssl.gstatic.com/onebox/weather/48/${response.data.weather[0].icon}@2x.png`,
+      temperature: response.data.main.temp,
+      felttemp: response.data.main.feels_like,
+      humidity: response.data.main.humidity,
+      wind: response.data.wind.speed,
     });
   }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    let apiKey = "4f230f436aaf7bc8331e67c3e0e44473";
+    let unit = "metric";
+    let apiUrl = `https://api.openweathermap.org/Data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
+    axios.get(apiUrl).then(displayWeatherData);
+  }
+
+  function updateCity(event) {
+    event.preventDefault();
+    setCity(event.target.value);
+  }
+
   return (
     <div className="Weather">
       <form onSubmit={handleSubmit}>
@@ -31,51 +44,47 @@ export default function Weather() {
               placeholder="Search for a city ..."
               autoComplete="off"
               autofocus="on"
-            />
-          </div>
-          <div className="col-2">
-            <input
-              type="submit"
-              className="button"
-              value="Submit"
               onSubmit={updateCity}
             />
           </div>
           <div className="col-2">
-            <input type="button" id="here" className="button" value="Here" />
+            <input type="submit" className="button" value="Submit" />
+          </div>
+          <div className="col-2">
+            <input type="button" className="button" value="Here" />
           </div>
         </div>
       </form>
 
-      <h1 className="choosencity">{weatherData.city}</h1>
+      <h1 className="choosencity">{weather.city}</h1>
       <ul>
-        <li>{weatherData.date}</li>
+        <li>${city}</li>
         <li className="timeandzone">
-          GMT <span>+1</span>
+          GMT <span>{weather.data.sys.type}</span>
         </li>
       </ul>
       <br />
       <div className="row">
         <div className="col-4 tempanddetails">
           <ul>
-            <li>{weatherData.description}</li>
+            <li>{weather.description}</li>
             <li>
-              feels like: <span>{weatherData.felttemp}</span> °C
+              feels like: <span>{weather.felttemp}</span> °C
             </li>
             <li>
-              humidity: <span>{weatherData.humidity}</span> %
+              humidity: <span>{weather.humidity}</span> %
             </li>
             <li>
-              wind: <span>{weatherData.wind}</span> km/h
+              wind: <span>{weather.wind}</span> km/h
             </li>
           </ul>
         </div>
         <div className="col-4">
-          <img src={weatherData.imgUrl} alt={weatherData.description} />
+          <img src={weather.imgUrl} alt={weather.description} />
         </div>
 
         <div className="col-4 tempanddetails">
-          <span>{weatherData.temperature}</span>
+          <span>{weather.temperature}</span>
           <span className="unit">
             <a href="/">°C</a> | <a href="/">°F</a>
           </span>
@@ -83,23 +92,4 @@ export default function Weather() {
       </div>
     </div>
   );
-
-  function displayWeather(response) {
-    setWeather({
-      temperature: response.Data.main.temp,
-    });
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    let apiKey = "4f230f436aaf7bc8331e67c3e0e44473";
-    let unit = "metric";
-    let apiUrl = `https://api.openweathermap.org/Data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
-    axios.get(apiUrl).then(weatherData);
-  }
-
-  function updateCity(event) {
-    event.preventDefault();
-    setCity(event.target.value);
-  }
 }

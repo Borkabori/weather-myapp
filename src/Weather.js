@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Weather.css";
 
 export default function Weather() {
-  const [city, setCity] = useState(" ");
+  const [city, setCity] = useState("Budapest");
   const [weather, setWeather] = useState({});
   const [loaded, setLoaded] = useState(false);
 
@@ -13,7 +13,7 @@ export default function Weather() {
     setWeather({
       date: response.data.dt,
       description: response.data.weather[0].description,
-      imgUrl: `https://ssl.gstatic.com/onebox/weather/48/${response.data.weather[0].icon}@2x.png`,
+      imgUrl: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       temperature: response.data.main.temp,
       felttemp: response.data.main.feels_like,
       humidity: response.data.main.humidity,

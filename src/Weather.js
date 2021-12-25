@@ -18,6 +18,8 @@ export default function Weather() {
       felttemp: response.data.main.feels_like,
       humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
+      country: response.data.sys.country,
+      timezone: Math.floor(response.data.timezone / 3600),
     });
   }
 
@@ -25,7 +27,7 @@ export default function Weather() {
     event.preventDefault();
     let apiKey = "4f230f436aaf7bc8331e67c3e0e44473";
     let unit = "metric";
-    let apiUrl = `https://api.openweathermap.org/Data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
     axios.get(apiUrl).then(displayWeatherData);
   }
 
@@ -65,9 +67,11 @@ export default function Weather() {
 
         <h1 className="choosencity">{weather.city}</h1>
         <ul>
-          <li>${city}</li>
+          <li>
+            {city}, {weather.country}
+          </li>
           <li className="timeandzone">
-            GMT <span>{weather.data.sys.type}</span>
+            GMT <span>{weather.timezone}</span>
           </li>
         </ul>
         <br />
@@ -76,13 +80,13 @@ export default function Weather() {
             <ul>
               <li>{weather.description}</li>
               <li>
-                feels like: <span>{weather.felttemp}</span> °C
+                feels like: <span>{Math.round(weather.felttemp)}</span> °C
               </li>
               <li>
                 humidity: <span>{weather.humidity}</span> %
               </li>
               <li>
-                wind: <span>{weather.wind}</span> km/h
+                wind: <span>{Math.round(weather.wind)}</span> km/h
               </li>
             </ul>
           </div>
@@ -91,7 +95,7 @@ export default function Weather() {
           </div>
 
           <div className="col-4 tempanddetails">
-            <span>{weather.temperature}</span>
+            <span>{Math.round(weather.temperature)}</span>
             <span className="unit">
               <a href="/">°C</a> | <a href="/">°F</a>
             </span>
@@ -100,6 +104,6 @@ export default function Weather() {
       </div>
     );
   } else {
-    return form;
+    return <div className="Weather">{form}</div>;
   }
 }
